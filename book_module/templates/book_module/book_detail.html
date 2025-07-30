@@ -1,0 +1,347 @@
+{% extends 'shared/_layout.html' %}
+{% load thumbnail %}
+
+{% block title %}{{ books.title }}{% endblock %}
+{% block content %}
+	<section>
+		<div class="container">
+			<div class="row">
+
+				<div class="col-sm-9 padding-right">
+					<div class="product-details"><!--product-details-->
+						<div class="col-sm-5">
+							<div class="view-product">
+								{% if book.image %}
+                                    {% thumbnail book.image "330x380" quality=90 crop='center' as im %}
+                                        <img src="{{ im.url }}" alt="">
+                                    {% endthumbnail %}
+                                {% else %}
+                                    {% thumbnail "/static/images/prduct-detail/1.jpg" "268x250" quality=90 crop='center' as im %}
+                                        <img src="{{ im.url }}" alt="">
+                                    {% endthumbnail %}
+                                {% endif %}
+								<h3>بزرگنمایـی</h3>
+							</div>
+							<div id="similar-product" class="carousel slide" data-ride="carousel">
+
+								  <!-- Wrapper for slides -->
+								    <div class="carousel-inner" style="height: 50px">
+{#										<div class="item">#}
+{#										  <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>#}
+{#										  <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>#}
+{#										  <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>#}
+{#										</div>#}
+{#										<div class="item active">#}
+{#										  <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>#}
+{#										  <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>#}
+{#										  <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>#}
+{#										</div>#}
+{#										<div class="item">#}
+{#										  <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>#}
+{#										  <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>#}
+{#										  <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>#}
+{#										</div>#}
+{#                                        {% for group in book %}#}
+{##}
+{#                                        {% endfor %}#}
+
+									</div>
+
+								  <!-- Controls -->
+								  <a class="right item-control" href="#similar-product" data-slide="next">
+									<i class="fa fa-angle-right"></i>
+								  </a>
+								  <a class="left item-control" href="#similar-product" data-slide="prev">
+									<i class="fa fa-angle-left"></i>
+								  </a>
+							</div>
+
+						</div>
+						<div class="col-sm-7">
+							<div class="product-information"><!--/product-information-->
+								<div>
+									<h2>{{ book.title }}</h2>
+									<p>{{ book.author }}</p>
+								</div>
+								<div>
+									<span>
+										<span>قیمت : 2.350.000 ريال</span>
+									</span>
+									<span>
+                                        {% if user.is_authenticated %}
+                                        	<button class="btn btn-fefault cart">
+                                            {% if book in has_borrowed %}
+                                            	برگرداندن کتاب
+                                            {% else %}
+                                                امانت گرفتن
+                                            {% endif %}
+                                            </button>
+                                        {% else %}
+                                            <a href="{% url 'login_page' %}">
+                                            <button class="btn btn-fefault cart">
+                                                برای امانت گرفتن وارد شوید
+                                            </button>
+                                            </a>
+                                        {% endif %}
+{#										<button type="button" class="btn btn-fefault cart">#}
+{#											<i class="fa fa-shopping-cart"></i>#}
+{#											افـزودن به سبـد خریـد#}
+{#										</button>#}
+									</span>
+								</div>
+								<div>
+									<p><b>موجـودی :</b>{% if book.count > 0 %}
+										{{ book.count }}
+                                        {% else %}
+                                        موجود نیست
+									    {% endif %} </p>
+									<p><b>نویسنده :</b> {{ book.author }}</p>
+									<p><b>ناشر :</b> {{ book.publisher }} </p>
+                                    <p><b>صفحه :</b> {{ book.page }} </p>
+									<p><b>حداقل سن :</b> {{ book.min_age }} </p>
+								</div>
+
+							</div><!--/product-information-->
+						</div>
+					</div><!--/product-details-->
+
+					<div class="category-tab shop-details-tab"><!--category-tab-->
+                        <div>{{ book.description }}</div>
+                    </div>
+
+					<div class="recommended_items"><!--recommended_items-->
+						<h2 class="title text-center">محصولات پیشنهادی</h2>
+
+						<div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
+							<div class="carousel-inner">
+								<div class="item active">
+									<div class="col-sm-4">
+										<div class="product-image-wrapper">
+											<div class="single-products">
+												<div class="productinfo text-center">
+													<img src="images/home/recommend1.jpg" alt="">
+													<h2>1.250.000 ريال</h2>
+													<p>توضیحات کوتاه محصول</p>
+													<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<div class="product-image-wrapper">
+											<div class="single-products">
+												<div class="productinfo text-center">
+													<img src="images/home/recommend2.jpg" alt="">
+													<h2>1.250.000 ريال</h2>
+													<p>توضیحات کوتاه محصول</p>
+													<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<div class="product-image-wrapper">
+											<div class="single-products">
+												<div class="productinfo text-center">
+													<img src="images/home/recommend3.jpg" alt="">
+													<h2>1.250.000 ريال</h2>
+													<p>توضیحات کوتاه محصول</p>
+													<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="item">
+									<div class="col-sm-4">
+										<div class="product-image-wrapper">
+											<div class="single-products">
+												<div class="productinfo text-center">
+													<img src="images/home/recommend1.jpg" alt="">
+													<h2>1.250.000 ريال</h2>
+													<p>توضیحات کوتاه محصول</p>
+													<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<div class="product-image-wrapper">
+											<div class="single-products">
+												<div class="productinfo text-center">
+													<img src="images/home/recommend2.jpg" alt="">
+													<h2>1.250.000 ريال</h2>
+													<p>توضیحات کوتاه محصول</p>
+													<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<div class="product-image-wrapper">
+											<div class="single-products">
+												<div class="productinfo text-center">
+													<img src="images/home/recommend3.jpg" alt="">
+													<h2>1.250.000 ريال</h2>
+													<p>توضیحات کوتاه محصول</p>
+													<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							 <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
+								<i class="fa fa-angle-left"></i>
+							  </a>
+							  <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
+								<i class="fa fa-angle-right"></i>
+							  </a>
+						</div>
+					</div><!--/recommended_items-->
+
+				</div>
+
+				<div class="col-sm-3">
+					<div class="left-sidebar">
+						<h2>دسته بندی محصولات</h2>
+						<div class="panel-group category-products" id="accordian"><!--category-productsr-->
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordian" href="#sportswear">
+											<span class="badge pull-right"><i class="fa fa-plus"></i></span>
+											دسته 1
+										</a>
+									</h4>
+								</div>
+								<div id="sportswear" class="panel-collapse collapse">
+									<div class="panel-body">
+										<ul>
+											<li><a href="">محصول 1 </a></li>
+											<li><a href="">محصول 2 </a></li>
+											<li><a href="">محصول 3 </a></li>
+											<li><a href="">محصول 4</a></li>
+											<li><a href="">محصول 5</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordian" href="#mens">
+											<span class="badge pull-right"><i class="fa fa-plus"></i></span>
+											دسته 2
+										</a>
+									</h4>
+								</div>
+								<div id="mens" class="panel-collapse collapse">
+									<div class="panel-body">
+										<ul>
+											<li><a href="">محصول 1 </a></li>
+											<li><a href="">محصول 2 </a></li>
+											<li><a href="">محصول 3 </a></li>
+											<li><a href="">محصول 4</a></li>
+											<li><a href="">محصول 5</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title"><a href="#">محصول 1</a></h4>
+								</div>
+							</div>
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title"><a href="#">محصول 2</a></h4>
+								</div>
+							</div>
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title"><a href="#">محصول 3</a></h4>
+								</div>
+							</div>
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title"><a href="#">محصول 4</a></h4>
+								</div>
+							</div>
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title"><a href="#">محصول 5</a></h4>
+								</div>
+							</div>
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title"><a href="#">محصول 6</a></h4>
+								</div>
+							</div>
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title"><a href="#">محصول 7</a></h4>
+								</div>
+							</div>
+						</div><!--/category-productsr-->
+
+						<div class="brands_products"><!--brands_products-->
+							<h2>برنـد ها</h2>
+							<div class="brands-name">
+								<ul class="nav nav-pills nav-stacked">
+									<li><a href=""> <span class="pull-left">(50)</span>برنـد 1</a></li>
+									<li><a href=""> <span class="pull-left">(56)</span>برنـد 2</a></li>
+									<li><a href=""> <span class="pull-left">(27)</span>برنـد 3</a></li>
+									<li><a href=""> <span class="pull-left">(32)</span>برنـد 4</a></li>
+									<li><a href=""> <span class="pull-left">(5)</span>برنـد 5</a></li>
+								</ul>
+							</div>
+						</div><!--/brands_products-->
+
+						<div class="price-range"><!--price-range-->
+							<h2>فیلتـر قیمـت</h2>
+							<div class="well">
+								 <div class="slider slider-horizontal" style="width: 166px;"><div class="slider-track"><div class="slider-selection" style="left: 0.025%; width: 0.0199999%;"></div><div class="slider-handle round left-round" style="left: 0.025%;"></div><div class="slider-handle round" style="left: 0.045%;"></div></div><div class="tooltip top" style="top: -30px; left: -33.4419px;"><div class="tooltip-arrow"></div><div class="tooltip-inner">250 : 450</div></div><input type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000000" data-slider-step="5" data-slider-value="[250,450]" id="sl2" style=""></div><br>
+								 <b>1.000.000 ريال</b> <b class="pull-left">0 ريال</b>
+							</div>
+						</div><!--/price-range-->
+
+						<div class="shipping text-center"><!--shipping-->
+							<img src="images/home/shipping.jpg" alt="">
+						</div><!--/shipping-->
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</section>
+{% endblock %}
+
+<script>
+  document.querySelectorAll('.borrow-toggle-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      const bookItem = this.closest('.book-item');
+      const bookId = bookItem.dataset.bookId;
+
+      fetch("{% url 'borrow_toggle' %}", {
+        method: "POST",
+        headers: {
+          "X-CSRFToken": "{{ csrf_token }}",
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: new URLSearchParams({ book_id: bookId })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          alert(data.message);  // یا toast خودت
+          location.reload();    // یا تغییر متن دکمه به صورت داینامیک
+        } else {
+          alert("خطا: " + data.message);
+        }
+      });
+    });
+  });
+</script>
