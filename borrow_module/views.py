@@ -26,7 +26,7 @@ def toggle_borrow(request):
         return JsonResponse({'success': True, 'message': 'کتاب با موفقیت برگردانده شد', 'action': 'returned'})
     else:
         # اگر موجود نباشه
-        if not book.available:
+        if not book.available_count:
             return JsonResponse({'success': False, 'message': 'کتاب در حال حاضر موجود نیست'})
 
         # امانت گرفتن

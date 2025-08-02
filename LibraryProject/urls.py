@@ -24,6 +24,7 @@ urlpatterns = [
     path('', include('account_module.urls')),
     path('books/', include('book_module.urls')),
     path('admin/', admin.site.urls),
+    path('orders/', include('borrow_module.urls')),
 
 ]
 

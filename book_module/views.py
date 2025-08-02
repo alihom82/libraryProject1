@@ -49,7 +49,7 @@ class BookListView(ListView):
     template_name = 'book_module/book_list.html'
     model = Book
     context_object_name = 'books'
-    paginate_by = 1
+    paginate_by = 15
     ordering = ['-release_date']
 
     def get_queryset(self):

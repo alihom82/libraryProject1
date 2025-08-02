@@ -26,24 +26,21 @@
 
 								  <!-- Wrapper for slides -->
 								    <div class="carousel-inner" style="height: 50px">
-{#										<div class="item">#}
-{#										  <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>#}
-{#										  <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>#}
-{#										  <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>#}
-{#										</div>#}
-{#										<div class="item active">#}
-{#										  <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>#}
-{#										  <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>#}
-{#										  <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>#}
-{#										</div>#}
-{#										<div class="item">#}
-{#										  <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>#}
-{#										  <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>#}
-{#										  <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>#}
-{#										</div>#}
-{#                                        {% for group in book %}#}
-{##}
-{#                                        {% endfor %}#}
+										<div class="item">
+										  <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>
+										  <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>
+										  <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>
+										</div>
+										<div class="item active">
+										  <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>
+										  <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>
+										  <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>
+										</div>
+										<div class="item">
+										  <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>
+										  <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>
+										  <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>
+										</div>
 
 									</div>
 
@@ -69,13 +66,17 @@
 									</span>
 									<span>
                                         {% if user.is_authenticated %}
-                                        	<button class="btn btn-fefault cart">
-                                            {% if book in has_borrowed %}
-                                            	برگرداندن کتاب
-                                            {% else %}
-                                                امانت گرفتن
-                                            {% endif %}
-                                            </button>
+                                            <form method="post" id="borrowForm" action="{% url "borrow_toggle" %}">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="book_id" value="{{ book.id }}">
+                                                <button type="submit" class="btn btn-fefault cart">
+                                                    {% if has_borrowed %}
+                                                        بازگرداندن کتاب
+                                                    {% else %}
+                                                        امانت گرفتن کتاب
+                                                    {% endif %}
+                                                </button>
+                                            </form>
                                         {% else %}
                                             <a href="{% url 'login_page' %}">
                                             <button class="btn btn-fefault cart">
@@ -83,11 +84,22 @@
                                             </button>
                                             </a>
                                         {% endif %}
-{#										<button type="button" class="btn btn-fefault cart">#}
-{#											<i class="fa fa-shopping-cart"></i>#}
-{#											افـزودن به سبـد خریـد#}
-{#										</button>#}
 									</span>
+{#                                        {% if user.is_authenticated %}#}
+{#                                        	<button class="btn btn-fefault cart">#}
+{#                                            {% if book in has_borrowed %}#}
+{#                                            	برگرداندن کتاب#}
+{#                                            {% else %}#}
+{#                                                امانت گرفتن#}
+{#                                            {% endif %}#}
+{#                                            </button>#}
+{#                                        {% else %}#}
+{#                                            <a href="{% url 'login_page' %}">#}
+{#                                            <button class="btn btn-fefault cart">#}
+{#                                                برای امانت گرفتن وارد شوید#}
+{#                                            </button>#}
+{#                                            </a>#}
+{#                                        {% endif %}#}
 								</div>
 								<div>
 									<p><b>موجـودی :</b>{% if book.count > 0 %}
@@ -319,29 +331,113 @@
 	</section>
 {% endblock %}
 
-<script>
-  document.querySelectorAll('.borrow-toggle-btn').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      const bookItem = this.closest('.book-item');
-      const bookId = bookItem.dataset.bookId;
 
-      fetch("{% url 'borrow_toggle' %}", {
-        method: "POST",
-        headers: {
-          "X-CSRFToken": "{{ csrf_token }}",
-          "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body: new URLSearchParams({ book_id: bookId })
-      })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          alert(data.message);  // یا toast خودت
-          location.reload();    // یا تغییر متن دکمه به صورت داینامیک
-        } else {
-          alert("خطا: " + data.message);
-        }
+
+{% block footer_references %}
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("borrowForm");
+            if (!form) return;
+
+            const button = form.querySelector("button");
+            const resultMessage = document.createElement("p");
+            resultMessage.id = "resultMessage";
+            resultMessage.style.marginTop = "10px";
+            resultMessage.style.color = "green";
+            form.appendChild(resultMessage);
+
+            form.addEventListener("submit", function (e) {
+                e.preventDefault();
+
+                fetch(form.action, {
+                    method: "POST",
+                    headers: {
+                        "X-CSRFToken": form.querySelector('[name=csrfmiddlewaretoken]').value,
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    body: new URLSearchParams(new FormData(form))
+                })
+                .then(response => response.json())
+                .then(data => {
+                    resultMessage.innerText = data.message;
+
+                    // تغییر متن دکمه بر اساس اکشن دریافتی
+                    if (data.action === "borrowed") {
+                        button.textContent = "بازگرداندن کتاب";
+                        button.classList.remove("btn-success");
+                        button.classList.add("btn-warning");
+                    } else if (data.action === "returned") {
+                        button.textContent = "امانت گرفتن کتاب";
+                        button.classList.remove("btn-warning");
+                        button.classList.add("btn-success");
+                    }
+                })
+                .catch(error => {
+                    resultMessage.innerText = "خطا در ارتباط با سرور.";
+                    resultMessage.style.color = "red";
+                    console.error("Error:", error);
+                });
+            });
+        });
+        </script>
+
+    <script>
+      document.querySelectorAll('.borrow-toggle-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          const bookItem = this.closest('.book-item');
+          const bookId = bookItem.dataset.bookId;
+
+          fetch("{% url 'borrow_toggle' %}", {
+            method: "POST",
+            headers: {
+              "X-CSRFToken": "{{ csrf_token }}",
+              "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: new URLSearchParams({ book_id: bookId })
+          })
+          .then(res => res.json())
+          .then(data => {
+            if (data.success) {
+              alert(data.message);  // یا toast خودت
+              location.reload();    // یا تغییر متن دکمه به صورت داینامیک
+            } else {
+              alert("خطا: " + data.message);
+            }
+          });
+        });
       });
-    });
-  });
-</script>
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            console.log("DOM fully loaded.");
+            const form = document.getElementById("borrowForm");
+            if (!form) {
+                console.log("Form not found!");
+                return;
+            }
+            form.addEventListener("submit", function(e) {
+                e.preventDefault();
+                console.log("Submitting form via fetch...");
+
+                fetch(form.action, {
+                    method: "POST",
+                    headers: {
+                        "X-CSRFToken": form.querySelector('[name=csrfmiddlewaretoken]').value,
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    body: new URLSearchParams(new FormData(form))
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Response received:", data);
+                    document.getElementById("resultMessage").innerText = data.message;
+                })
+                .catch(error => {
+                    console.error("Fetch error:", error);
+                });
+            });
+        });
+    </script>
+{% endblock %}

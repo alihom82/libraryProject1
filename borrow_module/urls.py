@@ -1,8 +1,8 @@
 # orders/urls.py
 
 from django.urls import path
-from .views import toggle_borrow
+from . import views
 
 urlpatterns = [
-    path('ajax/borrow-toggle/', toggle_borrow, name='borrow_toggle'),
+    path('borrow-toggle/',views.toggle_borrow, name='borrow_toggle'),
 ]
