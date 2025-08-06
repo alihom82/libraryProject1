@@ -15,21 +15,21 @@
                 {% endif %}
                 <h2>{{ book.title }}</h2>
                     <p>{{ book.author }}</p>
-                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</a>
+                <a href="{% url 'BookDetail' pk=book.pk %}" class="btn btn-default add-to-cart"><i class="fa"></i>جزئیات</a>
             </div>
             <div class="product-overlay">
                 <div class="overlay-content">
                     <h2>{{ book.title }}</h2>
                     <p>{{ book.author }}</p>
-                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</a>
+                    <a href="{% url 'BookDetail' pk=book.pk %}" class="btn btn-default add-to-cart"><i class="fa"></i>جزئیات</a>
                 </div>
             </div>
         </div>
         <div class="choose">
-            <ul class="nav nav-pills nav-justified">
-                <li><a href="{% url 'BookDetail' slug=book.slug %}"><i class="fa fa-plus-square"></i>مشاهده جزییات</a></li>
-                <li><a href=""><i class="fa fa-plus-square"></i>مقایسه</a></li>
-            </ul>
+{#            <ul class="nav nav-pills nav-justified">#}
+{#                <li><a href="{% url 'BookDetail' slug=book.slug %}"><i class="fa fa-plus-square"></i>مشاهده جزییات</a></li>#}
+{#                <li><a href=""><i class="fa fa-plus-square"></i>مقایسه</a></li>#}
+{#            </ul>#}
         </div>
     </div>
 </div>

@@ -13,22 +13,6 @@
 						    	{% include 'book_module/include/book_item_partial.html' %}
 						    {% endfor %}
                             <div class="clearfix"></div>
-{#						    <ul class="pagination">#}
-{#                                {% if page_obj.has_previous %}#}
-{#                                    <li><a class="cursor-pointer"#}
-{#                                           onclick="fillPage({{ page_obj.previous_page_number }})">قبلی</a></li>#}
-{#                                {% endif %}#}
-{#                                {% for pageNumber in paginator.page_range %}#}
-{#                                    <li class="{% if page_obj.number == pageNumber %} active {% endif %}">#}
-{#                                        <a class="cursor-pointer"#}
-{#                                           onclick="fillPage({{ pageNumber }})">{{ pageNumber }}</a>#}
-{#                                    </li>#}
-{#                                {% endfor %}#}
-{#                                {% if page_obj.has_next %}#}
-{#                                    <li><a class="cursor-pointer" onclick="fillPage({{ page_obj.next_page_number }})">بعدی</a>#}
-{#                                    </li>#}
-{#                                {% endif %}#}
-{#                            </ul>#}
                             <ul class="pagination">
                                 {% if page_obj.has_previous %}
                                     <li><a class="cursor-pointer"
@@ -57,58 +41,14 @@
 
 				<div class="col-sm-3">
 					<div class="left-sidebar">
-						<h2>دسته بندی محصولات</h2>
+						<h2>نویسنده ها</h2>
 						<div class="panel-group category-products" id="accordian"><!--category-productsr-->
-{##}
-{#                            {% for nationality, authors_list in nationality_author.items %}#}
-{#                                <div class="panel panel-default">#}
-{#								    <div class="panel-heading">#}
-{#								    	<h4 class="panel-title">#}
-{#								    		<a data-toggle="collapse" data-parent="#accordian" href="#sportswear">#}
-{#								    			<span class="badge pull-right"><i class="fa fa-plus"></i></span>#}
-{#								    			{{ nationality }}#}
-{#								    		</a>#}
-{#								    	</h4>#}
-{#								    </div>#}
-{#								    <div id="sportswear" class="panel-collapse collapse">#}
-{#								    	<div class="panel-body">#}
-{#								    		<ul>#}
-{#                                                {% for author in authors_list %}#}
-{#                                                	<li><a href="">{{ author }}</a></li>#}
-{#                                                {% endfor %}#}
-{#								    		</ul>#}
-{#								    	</div>#}
-{#								    </div>#}
-{#							    </div>#}
-{#						    {% endfor %}#}
-
-{#							<div class="panel panel-default">#}
-{#								<div class="panel-heading">#}
-{#									<h4 class="panel-title">#}
-{#										<a data-toggle="collapse" data-parent="#accordian" href="#sportswear">#}
-{#											<span class="badge pull-right"><i class="fa fa-plus"></i></span>#}
-{#											دسته 1#}
-{#										</a>#}
-{#									</h4>#}
-{#								</div>#}
-{#								<div id="sportswear" class="panel-collapse collapse">#}
-{#									<div class="panel-body">#}
-{#										<ul>#}
-{#											<li><a href="">محصول 1 </a></li>#}
-{#											<li><a href="">محصول 2 </a></li>#}
-{#											<li><a href="">محصول 3 </a></li>#}
-{#											<li><a href="">محصول 4</a></li>#}
-{#											<li><a href="">محصول 5</a></li>#}
-{#										</ul>#}
-{#									</div>#}
-{#								</div>#}
-{#							</div>#}
                         <div class="panel panel-default">
 								<div class="panel-heading">
 									<h4 class="panel-title">
                                         {% for author in authors %}
                                             <div>
-										        <a data-toggle="collapse" data-parent="#accordian" href="{% url 'BookAuthorList' author=author.url_title %}">
+										        <a data-toggle="collapse" data-parent="#accordian" href="{% url 'BookAuthorList' pk=author.pk %}">
 										        	<span class="badge pull-right"><i class=""></i></span>
 										        	{{ author }}
 										        </a>
@@ -116,47 +56,8 @@
                                             {% endfor %}
 									</h4>
 								</div>
-								<div id="sportswear" class="panel-collapse collapse">
-									<div class="panel-body">
-										<ul>
-                                            {% for author in authors %}
-                                                <li><a href="">محصول 1 </a></li>
-                                            {% endfor %}
-										</ul>
-									</div>
-								</div>
 							</div>
-
-
-
 						</div><!--/category-productsr-->
-
-						<div class="brands_products"><!--brands_products-->
-							<h2>برنـد ها</h2>
-							<div class="brands-name">
-								<ul class="nav nav-pills nav-stacked">
-									<li><a href=""> <span class="pull-left">(50)</span>برنـد 1</a></li>
-									<li><a href=""> <span class="pull-left">(56)</span>برنـد 2</a></li>
-									<li><a href=""> <span class="pull-left">(27)</span>برنـد 3</a></li>
-									<li><a href=""> <span class="pull-left">(32)</span>برنـد 4</a></li>
-									<li><a href=""> <span class="pull-left">(5)</span>برنـد 5</a></li>
-								</ul>
-							</div>
-						</div><!--/brands_products-->
-
-						<div class="price-range"><!--price-range-->
-							<h2>فیلتـر قیمـت</h2>
-							<div class="well">
-								 <div class="slider slider-horizontal" style="width: 166px;"><div class="slider-track"><div class="slider-selection" style="left: 0.025%; width: 0.0199999%;"></div><div class="slider-handle round left-round" style="left: 0.025%;"></div><div class="slider-handle round" style="left: 0.045%;"></div></div><div class="tooltip top" style="top: -30px; left: -33.4419px;"><div class="tooltip-arrow"></div><div class="tooltip-inner">250 : 450</div></div>
-                                     <label for="sl2"></label><input type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000000" data-slider-step="5" data-slider-value="[250,450]" id="sl2" style=""></div><br>
-								 <b>1.000.000 ريال</b> <b class="pull-left">0 ريال</b>
-							</div>
-						</div><!--/price-range-->
-
-						<div class="shipping text-center"><!--shipping-->
-							<img src="/static/images/home/shipping.jpg" alt="">
-						</div><!--/shipping-->
-
 					</div>
 				</div>
 

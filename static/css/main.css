@@ -1190,6 +1190,7 @@ h2.title {
 
 .pagination {
   display: inline-block;
+  /*display: flex;*/
   margin-bottom: 25px;
   margin-top: 0;
   padding-right: 15px;

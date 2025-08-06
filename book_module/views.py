@@ -88,8 +88,19 @@ class BookDetailView(DetailView):
     slug_field = 'slug'
     slug_url_kwarg = 'slug'
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        author_slug = self.kwargs.get('author')  # گرفتن مقدار نویسنده از URL
+        if author_slug:
+            author = get_object_or_404(Author, url_title=author_slug, is_active=True, is_deleted=False)
+            queryset = queryset.filter(author=author)
+        return queryset
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        authors = Author.objects.filter(is_active=True, is_deleted=False)
+        context['authors'] = authors
+        context['current_author_slug'] = self.kwargs.get('author')
         book = self.get_object()
         user = self.request.user
 

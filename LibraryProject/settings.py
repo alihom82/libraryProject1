@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'borrow_module',
     # external app
     'django_render_partial',
-    'sorl.thumbnail'
+    'sorl.thumbnail',
+    'jalali_date'
 ]
 
 MIDDLEWARE = [
