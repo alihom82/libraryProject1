@@ -120,9 +120,9 @@ class BookDetailView(DetailView):
             borrow.save()
             return JsonResponse({'success': True, 'message': 'کتاب با موفقیت برگردانده شد'})
         else:
-            if book.available_count <= 0:
+            if book.available_count() == 0:
                 return JsonResponse({'success': False, 'message': 'کتاب در حال حاضر موجود نیست'})
 
-            Borrow.objects.create(user=user, book=book)
-            book.save()
-            return JsonResponse({'success': True, 'message': 'کتاب با موفقیت امانت گرفته شد'})
+        Borrow.objects.create(user=user, book=book)
+        borrow.save()
+        return JsonResponse({'success': True, 'message': 'کتاب با موفقیت امانت گرفته شد'})

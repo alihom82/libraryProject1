@@ -1,212 +1,164 @@
+Ali, [۲۰۲۵-۰۸-۰۷ ۱۸:۲۰]
 {% extends 'shared/_layout.html' %}
 {% load thumbnail %}
 
 {% block title %}{{ books.title }}{% endblock %}
+
 {% block content %}
-	<section>
-		<div class="container">
-			<div class="row">
+<section>
+  <div class="container">
+    <div class="row">
 
-				<div class="col-sm-9 padding-right">
-					<div class="product-details"><!--product-details-->
-						<div class="col-sm-5">
-							<div class="view-product">
-								{% if book.image %}
-                                    {% thumbnail book.image "330x380" quality=90 crop='center' as im %}
-                                        <img src="{{ im.url }}" alt="">
-                                    {% endthumbnail %}
-                                {% else %}
-                                    {% thumbnail "/static/images/prduct-detail/1.jpg" "268x250" quality=90 crop='center' as im %}
-                                        <img src="{{ im.url }}" alt="">
-                                    {% endthumbnail %}
-                                {% endif %}
-							</div>
-						</div>
-						<div class="col-sm-7">
-							<div class="product-information"><!--/product-information-->
-								<div>
-									<h2>{{ book.title }}</h2>
-									<p>{{ book.author }}</p>
-								</div>
-								<div>
-									<span>
-										<span>قیمت : 2.350.000 ريال</span>
-									</span>
-									<span>
-                                        {% if user.is_authenticated %}
-                                            <form method="post" id="borrowForm" action="{% url "borrow_toggle" %}">
-                                                {% csrf_token %}
-                                                <input type="hidden" name="book_id" value="{{ book.id }}">
-                                                <button type="submit" class="btn btn-fefault cart">
-                                                    {% if has_borrowed %}
-                                                        بازگرداندن کتاب
-                                                    {% else %}
-                                                        امانت گرفتن کتاب
-                                                    {% endif %}
-                                                </button>
-                                            </form>
-                                        {% else %}
-                                            <a href="{% url 'login_page' %}">
-                                            <button class="btn btn-fefault cart">
-                                                برای امانت گرفتن وارد شوید
-                                            </button>
-                                            </a>
-                                        {% endif %}
-									</span>
-								</div>
-								<div>
-									<p><b>موجـودی :</b>{% if book.count > 0 %}
-										{{ book.count }}
-                                        {% else %}
-                                        موجود نیست
-									    {% endif %} </p>
-									<p><b>نویسنده :</b> {{ book.author }}</p>
-									<p><b>ناشر :</b> {{ book.publisher }} </p>
-                                    <p><b>صفحه :</b> {{ book.page }} </p>
-									<p><b>حداقل سن :</b> {{ book.min_age }} </p>
-								</div>
+      <div class="col-sm-9 padding-right">
+        <div class="product-details">
+          <div class="col-sm-5">
+            <div class="view-product">
+              {% if book.image %}
+                {% thumbnail book.image "330x380" quality=90 crop='center' as im %}
+                  <img src="{{ im.url }}" alt="">
+                {% endthumbnail %}
+              {% else %}
+                {% thumbnail "/static/images/prduct-detail/1.jpg" "268x250" quality=90 crop='center' as im %}
+                  <img src="{{ im.url }}" alt="">
+                {% endthumbnail %}
+              {% endif %}
+            </div>
+          </div>
 
-							</div><!--/product-information-->
-						</div>
-					</div><!--/product-details-->
+          <div class="col-sm-7">
+            <div class="product-information">
+              <div>
+                <h2>{{ book.title }}</h2>
+                <p>{{ book.author }}</p>
+              </div>
 
-					<div class="category-tab shop-details-tab"><!--category-tab-->
-                        <div>{{ book.description }}</div>
+              <div>
+                <span>
+                  {% if user.is_authenticated %}
+                    <form method="post" id="borrowForm" action="{% url "borrow_toggle" %}">
+                      {% csrf_token %}
+                      <input type="hidden" name="book_id" value="{{ book.id }}">
+                      <button type="submit" class="btn btn-fefault cart {% if has_borrowed %}btn-warning{% else %}btn-success{% endif %}">
+                        {% if has_borrowed %}
+                          بازگرداندن کتاب
+                        {% else %}
+                          امانت گرفتن کتاب
+                        {% endif %}
+                      </button>
+                    </form>
+                  {% else %}
+                    <a href="{% url 'login_page' %}">
+                      <button class="btn btn-fefault cart">برای امانت گرفتن وارد شوید</button>
+                    </a>
+                  {% endif %}
+                </span>
+              </div>
+
+              <div>
+                <p><b>موجـودی :</b>
+                  <span class="available-count">
+                    {% if book.available_count > 0 %}
+                      {{ book.available_count }}
+                    {% else %}
+                      موجود نیست
+                    {% endif %}
+                  </span>
+                </p>
+                <p><b>نویسنده :</b> {{ book.author }}</p>
+                <p><b>ناشر :</b> {{ book.publisher }}</p>
+                <p><b>صفحه :</b> {{ book.page }}</p>
+                <p><b>حداقل سن :</b> {{ book.min_age }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="category-tab shop-details-tab">
+          <div>{{ book.description }}</div>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="left-sidebar">
+          <h2>نویسنده ها</h2>
+          <div class="panel-group category-products" id="accordian">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  {% for author in authors %}
+                    <div>
+                      <a  data-parent="#accordian" href="{% url 'BookAuthorList' pk=author.id %}">
+                        {{ author }}
+                      </a>
                     </div>
-				</div>
-            <div class="col-sm-3">
-					<div class="left-sidebar">
-						<h2>نویسنده ها</h2>
-						<div class="panel-group category-products" id="accordian"><!--category-productsr-->
-                        <div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title">
-                                        {% for author in authors %}
-                                            <div>
-										        <a data-toggle="collapse" data-parent="#accordian" href="{% url 'BookAuthorList' pk=author.id %}">
-										        	<span class="badge pull-right"><i class=""></i></span>
-										        	{{ author }}
-										        </a>
-                                            </div>
-                                            {% endfor %}
-									</h4>
-								</div>
-							</div>
-						</div><!--/category-productsr-->
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
+                  {% endfor %}
+                </h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
 {% endblock %}
 
-
-
 {% block footer_references %}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("borrowForm");
+  if (!form) return;
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const form = document.getElementById("borrowForm");
-            if (!form) return;
+  const button = form.querySelector("button");
+  const resultMessage = document.createElement("p");
+  resultMessage.id = "resultMessage";
+  resultMessage.style.marginTop = "10px";
+  resultMessage.style.color = "green";
+  form.appendChild(resultMessage);
 
-            const button = form.querySelector("button");
-            const resultMessage = document.createElement("p");
-            resultMessage.id = "resultMessage";
-            resultMessage.style.marginTop = "10px";
-            resultMessage.style.color = "green";
-            form.appendChild(resultMessage);
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
 
-            form.addEventListener("submit", function (e) {
-                e.preventDefault();
+fetch(form.action, {
+      method: "POST",
+      headers: {
+        "X-CSRFToken": form.querySelector('[name=csrfmiddlewaretoken]').value,
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: new URLSearchParams(new FormData(form))
+    })
+    .then(response => response.json())
+    .then(data => {
+      resultMessage.innerText = data.message;
 
-                fetch(form.action, {
-                    method: "POST",
-                    headers: {
-                        "X-CSRFToken": form.querySelector('[name=csrfmiddlewaretoken]').value,
-                        "Content-Type": "application/x-www-form-urlencoded"
-                    },
-                    body: new URLSearchParams(new FormData(form))
-                })
-                .then(response => response.json())
-                .then(data => {
-                    resultMessage.innerText = data.message;
+      // به‌روزرسانی موجودی
+      const countSpan = document.querySelector('.available-count');
+      if (countSpan) {
+        if (data.available_count > 0) {
+          countSpan.textContent = data.available_count;
+        } else {
+          countSpan.textContent = "موجود نیست";
+        }
+      }
 
-                    // تغییر متن دکمه بر اساس اکشن دریافتی
-                    if (data.action === "borrowed") {
-                        button.textContent = "بازگرداندن کتاب";
-                        button.classList.remove("btn-success");
-                        button.classList.add("btn-warning");
-                    } else if (data.action === "returned") {
-                        button.textContent = "امانت گرفتن کتاب";
-                        button.classList.remove("btn-warning");
-                        button.classList.add("btn-success");
-                    }
-                })
-                .catch(error => {
-                    resultMessage.innerText = "خطا در ارتباط با سرور.";
-                    resultMessage.style.color = "red";
-                    console.error("Error:", error);
-                });
-            });
-        });
-        </script>
-
-    <script>
-      document.querySelectorAll('.borrow-toggle-btn').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-          const bookItem = this.closest('.book-item');
-          const bookId = bookItem.dataset.bookId;
-
-          fetch("{% url 'borrow_toggle' %}", {
-            method: "POST",
-            headers: {
-              "X-CSRFToken": "{{ csrf_token }}",
-              "Content-Type": "application/x-www-form-urlencoded"
-            },
-            body: new URLSearchParams({ book_id: bookId })
-          })
-          .then(res => res.json())
-          .then(data => {
-            if (data.success) {
-              alert(data.message);  // یا toast خودت
-              location.reload();    // یا تغییر متن دکمه به صورت داینامیک
-            } else {
-              alert("خطا: " + data.message);
-            }
-          });
-        });
-      });
-    </script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            console.log("DOM fully loaded.");
-            const form = document.getElementById("borrowForm");
-            if (!form) {
-                console.log("Form not found!");
-                return;
-            }
-            form.addEventListener("submit", function(e) {
-                e.preventDefault();
-                console.log("Submitting form via fetch...");
-
-                fetch(form.action, {
-                    method: "POST",
-                    headers: {
-                        "X-CSRFToken": form.querySelector('[name=csrfmiddlewaretoken]').value,
-                        "Content-Type": "application/x-www-form-urlencoded"
-                    },
-                    body: new URLSearchParams(new FormData(form))
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log("Response received:", data);
-                    document.getElementById("resultMessage").innerText = data.message;
-                })
-                .catch(error => {
-                    console.error("Fetch error:", error);
-                });
-            });
-        });
-    </script>
+      // تغییر متن و رنگ دکمه
+      if (data.action === "borrowed") {
+        button.textContent = "بازگرداندن کتاب";
+        button.classList.remove("btn-success");
+        button.classList.add("btn-warning");
+      } else if (data.action === "returned") {
+        button.textContent = "امانت گرفتن کتاب";
+        button.classList.remove("btn-warning");
+        button.classList.add("btn-success");
+      }
+    })
+    .catch(error => {
+      resultMessage.innerText = "خطا در ارتباط با سرور.";
+      resultMessage.style.color = "red";
+      console.error("Error:", error);
+    });
+  });
+});
+</script>
 {% endblock %}
