@@ -49,15 +49,14 @@ class BookListView(ListView):
     template_name = 'book_module/book_list.html'
     model = Book
     context_object_name = 'books'
-    paginate_by = 15
-    ordering = ['-release_date']
+    paginate_by = 9
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        author_slug = self.kwargs.get('author')  # گرفتن مقدار نویسنده از URL
-        if author_slug:
-            author = get_object_or_404(Author, url_title=author_slug, is_active=True, is_deleted=False)
-            queryset = queryset.filter(author=author)
+        author = self.kwargs.get('pk')  # گرفتن مقدار نویسنده از URL
+        if author:
+            author_pk = get_object_or_404(Author, pk=author, is_active=True, is_deleted=False)
+            queryset = queryset.filter(author=author_pk)
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -68,17 +67,6 @@ class BookListView(ListView):
         # برای اینکه بدونی در حال حاضر کدوم نویسنده انتخاب شده
         context['current_author_slug'] = self.kwargs.get('author')
         return context
-
-
-# class BookDetailView(DetailView):
-#     template_name = 'book_module/book_detail.html'
-#     model = Book
-#     slug_field = 'slug'
-#     slug_url_kwarg = 'slug'
-#
-#     def get_context_data(self, **kwargs):
-#         context = super(BookDetailView, self).get_context_data()
-#         return context
 
 
 

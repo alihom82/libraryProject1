@@ -89,7 +89,7 @@ class Book(models.Model):
     author = models.ForeignKey(Author, on_delete=models.CASCADE, verbose_name='نویسنده', related_name='author')
     page = models.PositiveIntegerField(verbose_name='صفحه')
     min_age = models.PositiveIntegerField(verbose_name='حداقل سن')
-    translator = models.ForeignKey(Translator, on_delete=models.CASCADE, verbose_name='مترجم',related_name='translator')
+    translator = models.ForeignKey(Translator, on_delete=models.CASCADE, verbose_name='مترجم',related_name='translator', null=True, blank=True)
     image = models.ImageField(upload_to='images/books', null=True, blank=True, verbose_name='تصویر کتاب')
     publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE, verbose_name='ناشر', related_name='publisher')
     count = models.PositiveIntegerField(default=0, verbose_name='تعداد')

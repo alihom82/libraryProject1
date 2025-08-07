@@ -48,7 +48,7 @@
 									<h4 class="panel-title">
                                         {% for author in authors %}
                                             <div>
-										        <a data-toggle="collapse" data-parent="#accordian" href="{% url 'BookAuthorList' pk=author.pk %}">
+										        <a href="{% url 'BookAuthorList' pk=author.pk %}">
 										        	<span class="badge pull-right"><i class=""></i></span>
 										        	{{ author }}
 										        </a>
