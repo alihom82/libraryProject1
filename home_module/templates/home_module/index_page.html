@@ -1,318 +1,64 @@
 {% extends 'shared/_layout.html' %}
+{% load thumbnail %}
 {% block title %}صفحه اصلی{% endblock %}
 {% block content %}
 
-	<section id="slider"><!--slider-->
-		<div class="container">
-			<div class="row">
-				<div class="col-sm-12">
-					<div id="slider-carousel" class="carousel slide" data-ride="carousel">
-						<ol class="carousel-indicators">
-							<li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
-							<li data-target="#slider-carousel" data-slide-to="1"></li>
-						</ol>
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 padding-right">
+                    <div class="features_items"><!--RetailSale_items-->
+                        <a href="shop-2.html"><h2 class="title text-center">آخرین کتاب ها</h2></a>
+                        <div id="new-item-carousel" class="carousel slide" data-ride="carousel">
+                            <div class="carousel-inner">
+                                <div class="item active">
+                                    {% for latest_book in latest_books %}
+                                        <div class="col-sm-3">
+                                            <div class="product-image-wrapper">
+                                                <div class="single-products">
+                                                    <div class="productinfo text-center">
+                                                        {% if latest_book.image %}
+                                                            {% thumbnail latest_book.image "330x380" quality=90 crop='center' as im %}
+                                                                <img src="{{ im.url }}" alt="">
+                                                            {% endthumbnail %}
+                                                        {% else %}
+                                                            {% thumbnail "/static/images/prduct-detail/1.jpg" "268x250" quality=90 crop='center' as im %}
+                                                                <img src="{{ im.url }}" alt="">
+                                                            {% endthumbnail %}
+                                                        {% endif %}
+                                                        <h2>{{ latest_book.title}}</h2>
+                                                        <p>{{ latest_book.author}}</p>
+                                                        <a href="{% url 'BookDetail' pk=latest_book.pk %}" class="btn btn-default add-to-cart"><i class="fa"></i>جزئیات</a>
+                                                    </div>
+                                                    <div class="product-overlay">
+                                                        <div class="overlay-content">
+                                                        <h2>{{ latest_book.title}}</h2>
+                                                        <p>{{ latest_book.author}}</p>
+                                                            <a href="{% url 'BookDetail' pk=latest_book.pk %}" class="btn btn-default add-to-cart"><i class="fa"></i>جزئیات</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+{#                                                <div class="choose">#}
+{#                                                    <ul class="nav nav-pills nav-justified">#}
+{#                                                        <li>#}
+{#                                                            <a href="#">#}
+{#                                                                <i class="fa fa-plus-square"></i>لیست علاقه مندی ها#}
+{#                                                            </a>#}
+{#                                                        </li>#}
+{#                                                        <li><a href="#"><i class="fa fa-plus-square"></i>مقایسه</a></li>#}
+{#                                                    </ul>#}
+{#                                                </div>#}
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div><!--RetailSale_items-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-						<div class="carousel-inner">
 
-							<div class="item active">
-								<div class="col-sm-6">
-									<h1><span>SHOP</span>CENTER</h1>
-									<h2>Shop Center</h2>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-									<button type="button" class="btn btn-default get">Get it now</button>
-								</div>
-								<div class="col-sm-6">
-									<img src="static/images/home/girl2.jpg" class="girl img-responsive" alt="" />
-									<img src="static/images/home/pricing.png"  class="pricing" alt="" />
-								</div>
-							</div>
-
-							<div class="item">
-								<div class="col-sm-6">
-									<h1><span>SHOP</span>CENTER</h1>
-									<h2>Shop Center</h2>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-									<button type="button" class="btn btn-default get">Get it now</button>
-								</div>
-								<div class="col-sm-6">
-									<img src="static/images/home/girl2.jpg" class="girl img-responsive" alt="" />
-									<img src="static/images/home/pricing.png" class="pricing" alt="" />
-								</div>
-							</div>
-
-						</div>
-
-						<a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
-							<i class="fa fa-angle-left"></i>
-						</a>
-						<a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
-							<i class="fa fa-angle-right"></i>
-						</a>
-					</div>
-
-				</div>
-			</div>
-		</div>
-	</section><!--/slider-->
-
-	<section>
-		<div class="container">
-			<div class="row">
-				<div class="col-sm-12 padding-right">
-					<div class="features_items"><!--RetailSale_items-->
-						<a href="shop-2.html"><h2 class="title text-center">فـروش خـرده</h2></a>
-						<div id="new-item-carousel" class="carousel slide" data-ride="carousel">
-						<div class="carousel-inner">
-						<div class="item active">
-							<div class="col-sm-3">
-								<div class="product-image-wrapper">
-									<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="static/images/home/product.jpg" alt="" />
-												<h2>2.500.000 R</h2>
-												<p>توضیحات کوتاه محصـول</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</a>
-											</div>
-											<div class="product-overlay">
-												<div class="overlay-content">
-													<h2>2.500.000 R</h2>
-													<p>توضیحات کوتاه محصـول</p>
-													<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</a>
-												</div>
-											</div>
-									</div>
-									<div class="choose">
-										<ul class="nav nav-pills nav-justified">
-											<li>
-												<a href="#">
-													<i class="fa fa-plus-square"></i>لیست علاقه مندی ها
-												</a>
-											</li>
-											<li><a href="#"><i class="fa fa-plus-square"></i>مقایسه</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-3">
-								<div class="product-image-wrapper">
-									<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="static/images/home/product.jpg" alt="" />
-												<h2>2.500.000 R</h2>
-												<p>توضیحات کوتاه محصـول</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</a>
-											</div>
-											<div class="product-overlay">
-												<div class="overlay-content">
-													<h2>2.500.000 R</h2>
-													<p>توضیحات کوتاه محصـول</p>
-													<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</a>
-												</div>
-											</div>
-									</div>
-									<div class="choose">
-										<ul class="nav nav-pills nav-justified">
-											<li>
-												<a href="#">
-													<i class="fa fa-plus-square"></i>لیست علاقه مندی ها
-												</a>
-											</li>
-											<li><a href="#"><i class="fa fa-plus-square"></i>مقایسه</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-3">
-								<div class="product-image-wrapper">
-									<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="static/images/home/product.jpg" alt="" />
-												<h2>2.500.000 R</h2>
-												<p>توضیحات کوتاه محصـول</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</a>
-											</div>
-											<div class="product-overlay">
-												<div class="overlay-content">
-													<h2>2.500.000 R</h2>
-													<p>توضیحات کوتاه محصـول</p>
-													<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</a>
-												</div>
-											</div>
-									</div>
-									<div class="choose">
-										<ul class="nav nav-pills nav-justified">
-											<li>
-												<a href="#">
-													<i class="fa fa-plus-square"></i>لیست علاقه مندی ها
-												</a>
-											</li>
-											<li><a href="#"><i class="fa fa-plus-square"></i>مقایسه</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-3">
-								<div class="product-image-wrapper">
-									<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="static/images/home/product.jpg" alt="" />
-												<h2>2.500.000 R</h2>
-												<p>توضیحات کوتاه محصـول</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</a>
-											</div>
-											<div class="product-overlay">
-												<div class="overlay-content">
-													<h2>2.500.000 R</h2>
-													<p>توضیحات کوتاه محصـول</p>
-													<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</a>
-												</div>
-											</div>
-									</div>
-									<div class="choose">
-										<ul class="nav nav-pills nav-justified">
-											<li>
-												<a href="#">
-													<i class="fa fa-plus-square"></i>لیست علاقه مندی ها
-												</a>
-											</li>
-											<li><a href="#"><i class="fa fa-plus-square"></i>مقایسه</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="item">
-						<div class="col-sm-3">
-							<div class="product-image-wrapper">
-								<div class="single-products">
-										<div class="productinfo text-center">
-											<img src="static/images/home/product.jpg" alt="" />
-											<h2>2.500.000 R</h2>
-											<p>توضیحات کوتاه محصـول</p>
-											<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</a>
-										</div>
-										<div class="product-overlay">
-											<div class="overlay-content">
-												<h2>2.500.000 R</h2>
-												<p>توضیحات کوتاه محصـول</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</a>
-											</div>
-										</div>
-								</div>
-								<div class="choose">
-									<ul class="nav nav-pills nav-justified">
-										<li>
-											<a href="#">
-												<i class="fa fa-plus-square"></i>لیست علاقه مندی ها
-											</a>
-										</li>
-										<li><a href="#"><i class="fa fa-plus-square"></i>مقایسه</a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-3">
-							<div class="product-image-wrapper">
-								<div class="single-products">
-										<div class="productinfo text-center">
-											<img src="static/images/home/product.jpg" alt="" />
-											<h2>2.500.000 R</h2>
-											<p>توضیحات کوتاه محصـول</p>
-											<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</a>
-										</div>
-										<div class="product-overlay">
-											<div class="overlay-content">
-												<h2>2.500.000 R</h2>
-												<p>توضیحات کوتاه محصـول</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</a>
-											</div>
-										</div>
-								</div>
-								<div class="choose">
-									<ul class="nav nav-pills nav-justified">
-										<li>
-											<a href="#">
-												<i class="fa fa-plus-square"></i>لیست علاقه مندی ها
-											</a>
-										</li>
-										<li><a href="#"><i class="fa fa-plus-square"></i>مقایسه</a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-3">
-							<div class="product-image-wrapper">
-								<div class="single-products">
-										<div class="productinfo text-center">
-											<img src="static/images/home/product.jpg" alt="" />
-											<h2>2.500.000 R</h2>
-											<p>توضیحات کوتاه محصـول</p>
-											<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</a>
-										</div>
-										<div class="product-overlay">
-											<div class="overlay-content">
-												<h2>2.500.000 R</h2>
-												<p>توضیحات کوتاه محصـول</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</a>
-											</div>
-										</div>
-								</div>
-								<div class="choose">
-									<ul class="nav nav-pills nav-justified">
-										<li>
-											<a href="#">
-												<i class="fa fa-plus-square"></i>لیست علاقه مندی ها
-											</a>
-										</li>
-										<li><a href="#"><i class="fa fa-plus-square"></i>مقایسه</a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-3">
-							<div class="product-image-wrapper">
-								<div class="single-products">
-										<div class="productinfo text-center">
-											<img src="static/images/home/product.jpg" alt="" />
-											<h2>2.500.000 R</h2>
-											<p>توضیحات کوتاه محصـول</p>
-											<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</a>
-										</div>
-										<div class="product-overlay">
-											<div class="overlay-content">
-												<h2>2.500.000 R</h2>
-												<p>توضیحات کوتاه محصـول</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</a>
-											</div>
-										</div>
-								</div>
-								<div class="choose">
-									<ul class="nav nav-pills nav-justified">
-										<li>
-											<a href="#">
-												<i class="fa fa-plus-square"></i>لیست علاقه مندی ها
-											</a>
-										</li>
-										<li><a href="#"><i class="fa fa-plus-square"></i>مقایسه</a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-						</div>
-					</div>
-							<a class="left recommended-item-control" href="#new-item-carousel" data-slide="prev">
-								<i class="fa fa-angle-left"></i>
-							  </a>
-							  <a class="right recommended-item-control" href="#new-item-carousel" data-slide="next">
-								<i class="fa fa-angle-right"></i>
-							  </a>
-					</div>
-					</div><!--RetailSale_items-->
-				</div>
-
-			</div>
-		</div>
-	</section>
-
- 
 {% endblock %}
