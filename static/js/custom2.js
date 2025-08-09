@@ -1,5 +1,5 @@
 function fillPage(page) {
-    console.log("Change");
+    console.log("Change2");
     $('#page').val(page);
     $('#filter_form').submit();
 }
