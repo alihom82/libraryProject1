@@ -53,7 +53,7 @@ class BookListView(ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        author = self.kwargs.get('pk')  # گرفتن مقدار نویسنده از URL
+        author = self.kwargs.get('pk')
         if author:
             author_pk = get_object_or_404(Author, pk=author, is_active=True, is_deleted=False)
             queryset = queryset.filter(author=author_pk)
@@ -64,7 +64,6 @@ class BookListView(ListView):
         authors = Author.objects.filter(is_active=True, is_deleted=False)
         context['authors'] = authors
 
-        # برای اینکه بدونی در حال حاضر کدوم نویسنده انتخاب شده
         context['current_author_slug'] = self.kwargs.get('author')
         return context
 
@@ -78,7 +77,7 @@ class BookDetailView(DetailView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        author_slug = self.kwargs.get('author')  # گرفتن مقدار نویسنده از URL
+        author_slug = self.kwargs.get('author')
         if author_slug:
             author = get_object_or_404(Author, url_title=author_slug, is_active=True, is_deleted=False)
             queryset = queryset.filter(author=author)
@@ -92,11 +91,10 @@ class BookDetailView(DetailView):
         book = self.get_object()
         user = self.request.user
 
-        # پیش‌فرض: کاربر کتاب را امانت نگرفته
+
         context['has_borrowed'] = False
 
         if user.is_authenticated:
-            # بررسی امانت فعلی این کتاب توسط این کاربر
             context['has_borrowed'] = Borrow.objects.filter(
                 user=user,
                 book=book,
@@ -111,11 +109,11 @@ class BookDetailView(DetailView):
 
         book = get_object_or_404(Book, pk=book_id)
 
-        # بررسی آیا کاربر قبلاً این کتاب را امانت گرفته ولی هنوز برنگردانده؟
+
         borrow = Borrow.objects.filter(user=user, book=book, returned_at__isnull=True).first()
 
         if borrow:
-            # کاربر کتاب را برمی‌گرداند
+
             borrow.returned_at = timezone.now()
             borrow.save()
             return JsonResponse({'success': True, 'message': 'کتاب با موفقیت برگردانده شد'})
