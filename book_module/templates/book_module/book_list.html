@@ -1,81 +1,82 @@
 {% extends 'shared/_layout.html' %}
 {% block title %}کتاب ها{% endblock %}
 {% block content %}
-	<section>
-		<div class="container">
-			<div class="row">
+    <section>
+        <div class="container">
+            <div class="row">
 
-				<div class="col-sm-9 padding-right">
+                <div class="col-sm-9 padding-right">
                     {% if books %}
                         <div class="features_items"><!--features_items-->
-						    <h2 class="title text-center">کتاب ها</h2>
-						    {% for book in books %}
-						    	{% include 'book_module/include/book_item_partial.html' %}
-						    {% endfor %}
+                            <h2 class="title text-center">کتاب ها</h2>
+                            {% for book in books %}
+                                {% include 'book_module/include/book_item_partial.html' %}
+                            {% endfor %}
                             <div class="clearfix"></div>
                             <ul class="pagination">
-{#                                {% if page_obj.has_previous %}#}
-{#                                    <li><a class="cursor-pointer"#}
-{#                                           href="?page={{ page_obj.previous_page_number }}">قبلی</a></li>#}
-{#                                {% endif %}#}
-{#                                {% for pageNumber in paginator.page_range %}#}
-{#                                    <li class="{% if page_obj.number == pageNumber %} active {% endif %}">#}
-{#                                        <a class="cursor-pointer"#}
-{#                                           href="?page={{ pageNumber }}">{{ pageNumber }}</a>#}
-{#                                    </li>#}
-{#                                {% endfor %}#}
-{#                                {% if page_obj.has_next %}#}
-{#                                    <li><a class="cursor-pointer" href="?page={{ page_obj.next_page_number }}">بعدی</a>#}
-{#                                    </li>#}
-{#                                {% endif %}#}
-                            {% if page_obj.has_previous %}
-                                    <li><a class="cursor-pointer"
-                                           onclick="fillPage({{ page_obj.previous_page_number }})">قبلی</a></li>
-                                {% endif %}
-                                {% for pageNumber in paginator.page_range %}
-                                    <li class="{% if page_obj.number == pageNumber %} active {% endif %}">
-                                        <a class="cursor-pointer"
-                                           onclick="fillPage({{ pageNumber }})">{{ pageNumber }}</a>
-                                    </li>
-                                {% endfor %}
-                                {% if page_obj.has_next %}
-                                    <li><a class="cursor-pointer" onclick="fillPage({{ page_obj.next_page_number }})">بعدی</a>
-                                    </li>
-                               {% endif %}
-
+                                {#                                {% if page_obj.has_previous %}#}
+                                {#                                    <li><a class="cursor-pointer"#}
+                                {#                                           href="?page={{ page_obj.previous_page_number }}">قبلی</a></li>#}
+                                {#                                {% endif %}#}
+                                {#                                {% for pageNumber in paginator.page_range %}#}
+                                {#                                    <li class="{% if page_obj.number == pageNumber %} active {% endif %}">#}
+                                {#                                        <a class="cursor-pointer"#}
+                                {#                                           href="?page={{ pageNumber }}">{{ pageNumber }}</a>#}
+                                {#                                    </li>#}
+                                {#                                {% endfor %}#}
+                                {#                                {% if page_obj.has_next %}#}
+                                {#                                    <li><a class="cursor-pointer" href="?page={{ page_obj.next_page_number }}">بعدی</a>#}
+                                {#                                    </li>#}
+                                {#                                {% endif %}#}
+                                <ul class="pagination">
+                                    {% if page_obj.has_previous %}
+                                        <li><a class="cursor-pointer"
+                                               onclick="fillPage({{ page_obj.previous_page_number }})">قبلی</a></li>
+                                    {% endif %}
+                                    {% for pageNumber in paginator.page_range %}
+                                        <li class="{% if page_obj.number == pageNumber %} active {% endif %}">
+                                            <a class="cursor-pointer"
+                                               onclick="fillPage({{ pageNumber }})">{{ pageNumber }}</a>
+                                        </li>
+                                    {% endfor %}
+                                    {% if page_obj.has_next %}
+                                        <li><a class="cursor-pointer"
+                                               onclick="fillPage({{ page_obj.next_page_number }})">بعدی</a></li>
+                                    {% endif %}
+                                </ul>
                             </ul>
-					    </div><!--features_items-->
+                        </div><!--features_items-->
                     {% else %}
                         <div class="alert alert-warning">
                             <p>هیچ محصولی یافت نشد</p>
                         </div>
                     {% endif %}
 
-				</div>
+                </div>
 
-				<div class="col-sm-3">
-					<div class="left-sidebar">
-						<h2>نویسنده ها</h2>
-						<div class="panel-group category-products" id="accordian"><!--category-productsr-->
-                        <div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title">
+                <div class="col-sm-3">
+                    <div class="left-sidebar">
+                        <h2>نویسنده ها</h2>
+                        <div class="panel-group category-products" id="accordian"><!--category-productsr-->
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
                                         {% for author in authors %}
                                             <div>
-										        <a href="{% url 'BookAuthorList' pk=author.pk %}">
-										        	<span class="badge pull-right"><i class=""></i></span>
-										        	{{ author }}
-										        </a>
+                                                <a href="{% url 'BookAuthorList' pk=author.pk %}">
+                                                    <span class="badge pull-right"><i class=""></i></span>
+                                                    {{ author }}
+                                                </a>
                                             </div>
-                                            {% endfor %}
-									</h4>
-								</div>
-							</div>
-						</div><!--/category-productsr-->
-					</div>
-				</div>
+                                        {% endfor %}
+                                    </h4>
+                                </div>
+                            </div>
+                        </div><!--/category-productsr-->
+                    </div>
+                </div>
 
-			</div>
-		</div>
-	</section>
+            </div>
+        </div>
+    </section>
 {% endblock %}
