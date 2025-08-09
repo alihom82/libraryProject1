@@ -13,16 +13,16 @@
                             <div class="carousel-inner">
                                 <div class="item active">
                                     {% for latest_book in latest_books %}
-                                        <div class="col-sm-3">
-                                            <div class="product-image-wrapper">
+                                        <div class="col-sm-3" >
+                                            <div class="product-image-wrapper" style="border-radius: 10px">
                                                 <div class="single-products">
                                                     <div class="productinfo text-center">
                                                         {% if latest_book.image %}
-                                                            {% thumbnail latest_book.image "330x380" quality=90 crop='center' as im %}
-                                                                <img src="{{ im.url }}" alt="">
+                                                            {% thumbnail latest_book.image "843x1262" quality=90 crop='center' as im %}
+                                                                <img src="{{ im.url }}" alt="" style="border-radius: 10px">
                                                             {% endthumbnail %}
                                                         {% else %}
-                                                            {% thumbnail "/static/images/prduct-detail/1.jpg" "268x250" quality=90 crop='center' as im %}
+                                                            {% thumbnail "/static/images/prduct-detail/1.jpg" "200x290" quality=90 crop='center' as im %}
                                                                 <img src="{{ im.url }}" alt="">
                                                             {% endthumbnail %}
                                                         {% endif %}
@@ -38,16 +38,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-{#                                                <div class="choose">#}
-{#                                                    <ul class="nav nav-pills nav-justified">#}
-{#                                                        <li>#}
-{#                                                            <a href="#">#}
-{#                                                                <i class="fa fa-plus-square"></i>لیست علاقه مندی ها#}
-{#                                                            </a>#}
-{#                                                        </li>#}
-{#                                                        <li><a href="#"><i class="fa fa-plus-square"></i>مقایسه</a></li>#}
-{#                                                    </ul>#}
-{#                                                </div>#}
                                             </div>
                                         </div>
                                     {% endfor %}

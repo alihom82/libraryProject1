@@ -13,8 +13,8 @@
           <div class="col-sm-5">
             <div class="view-product">
               {% if book.image %}
-                {% thumbnail book.image "330x380" quality=90 crop='center' as im %}
-                  <img src="{{ im.url }}" alt="">
+                {% thumbnail book.image "843x1262" quality=90 crop='center' as im %}
+                  <img src="{{ im.url }}" alt="" style="border-radius: 10px">
                 {% endthumbnail %}
               {% else %}
                 {% thumbnail "/static/images/prduct-detail/1.jpg" "268x250" quality=90 crop='center' as im %}

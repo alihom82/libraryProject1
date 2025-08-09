@@ -1,12 +1,12 @@
 {% load thumbnail %}
 
 <div class="col-sm-4">
-    <div class="product-image-wrapper">
+    <div class="product-image-wrapper" style="border-radius: 10px">
         <div class="single-products">
             <div class="productinfo text-center">
                 {% if book.image %}
-                    {% thumbnail book.image "268x250" quality=90 crop='center' as im %}
-                        <img src="{{ im.url }}">
+                    {% thumbnail book.image "843x1262" quality=90 crop='center' as im %}
+                        <img src="{{ im.url }}" style="border-radius: 10px">
                     {% endthumbnail %}
                 {% else %}
                     {% thumbnail "/static/images/shop/product.jpg" "268x250" quality=90 crop='center' as im %}
