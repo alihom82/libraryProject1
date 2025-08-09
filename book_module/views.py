@@ -7,43 +7,13 @@ from django.views.generic import ListView, DetailView
 
 from book_module.models import Book, Author
 
-from django.views.generic import DetailView
-from borrow_module.models import Borrow  # ایمپورت مدل Borrow
-from django.utils.functional import cached_property
+
+from borrow_module.models import Borrow
+
 
 # Create your views here.
 
 
-# class BookListView(ListView):
-#     template_name = 'book_module/book_list.html'
-#     model = Book
-#     context_object_name = 'books'
-#     paginate_by = 1
-#     ordering = ['-release_date']
-#
-#
-#     def get_context_data(self, **kwargs):
-#         context = super(BookListView, self).get_context_data(**kwargs)
-#         authors = Author.objects.filter(is_active=True,is_deleted=False).all()
-#         context['authors'] = authors
-#         return context
-#         # nationality_author = defaultdict(list)
-#         # for author in authors:
-#         #     nationality_author[author.nationality].append(author)
-#         # context['nationality_author'] = dict(nationality_author)
-#         # query = Book.objects.all()
-#         # book :Book = query.order_by('-release_date')
-#         # context['book'] = book
-#         # context['author'] = self.objects.author
-#         # print(context['author'])
-#
-#
-#     def get_queryset(self):
-#         query = super(BookListView, self).get_queryset()
-#         author_slug = self.kwargs.get('author')
-#         if author_slug:
-#             author = get_object_or_404(Author, url_title=author_slug, is_active=True, is_deleted=False)
-#         return query
 
 class BookListView(ListView):
     template_name = 'book_module/book_list.html'
