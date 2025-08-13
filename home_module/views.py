@@ -11,8 +11,5 @@ class HomeView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         latest_books = Book.objects.all().order_by('-release_date')[:4]
-        context['latest_books_group'] = group_list(latest_books)
         context['latest_books'] = latest_books
-        print(context['latest_books_group'])
-        print(context['latest_books'])
         return context
